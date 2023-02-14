@@ -11,9 +11,22 @@ s = context.socket(zmq.PUB)
 p = "tcp://*:5555"
 # Faz o bind do socket ao endereço
 s.bind(p)
+flag = False
+tagProfessor = 'B4 D9 07 85'
+status = 'inativo'
 while True:
+
     # Recebe na variável tagID tudo que é escrito na serial do arduino
     tagID = str(arduino.readline().decode())
-    print('dados publicados')
+    tagID = tagID.replace("\n", "")
+    tagID = tagID.strip()
+    if(tagID == tagProfessor):
+        flag = not(flag)
+        if flag: status = 'ativo'
+        else: status = 'inativo'
+        print('Tag do professor reconhecida, sistema', status)
+    
     # Faz o publish para todos os subscritos em TAG INFO com as informações da tag que acabou de receber pelo arduino (loop)
-    s.send_string("TAG INFO " + tagID)
+    if flag and tagID != tagProfessor :
+        s.send_string("TAG INFO " + tagID)
+        print('dados publicados')

@@ -7,6 +7,8 @@
 MFRC522 mfrc522(SS_PIN, RST_PIN);   
  
 char st[20];
+bool state = 0;
+bool stateRED = 1;
 
 void setup() 
 {
@@ -14,11 +16,13 @@ void setup()
   SPI.begin();          // Inicia comunicação SPI
   mfrc522.PCD_Init();   // Inicia MFRC522
   pinMode(2, OUTPUT);   // Inicia o led verde no pino 2
-  pinMode(3, OUTPUT);   // Inicia o led vermelho no pino 3
+  pinMode(3, OUTPUT);   // Inicia o led amarelo no pino 3
+  pinMode(4, OUTPUT);   // Inicia o led vermelho no pino 4
 }
 
 void loop() 
 {
+  digitalWrite(4, stateRED);   
   // Verifica novos cartões
   if ( ! mfrc522.PICC_IsNewCardPresent()) 
   {
@@ -44,15 +48,18 @@ void loop()
   // Escreve na serial o conteúdo da string do ID
   Serial.println(conteudo.substring(1));
 
-  // Se for o cartão, o LED verde irá acender
+  // Se for o cartão do professor, o LED amarelo irá acender
   if(conteudo.substring(1) == "B4 D9 07 85"){
-    digitalWrite(3, HIGH); 
+    state = !state;
+    stateRED = !stateRED;
+    digitalWrite(3, state); 
+    digitalWrite(4, stateRED); 
     delay(200);
-    digitalWrite(3, LOW);
   } else {
     digitalWrite(2, HIGH); 
     delay(200);
     digitalWrite(2, LOW);
   }
+
   delay(1300);
 }
