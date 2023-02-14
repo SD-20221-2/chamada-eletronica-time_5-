@@ -12,7 +12,7 @@ p = "tcp://*:5555"
 # Faz o bind do socket ao endereço
 s.bind(p)
 flag = False
-tagProfessor = 'B4 D9 07 85'
+tagProfessor = '46 06 99 AC'
 status = 'inativo'
 while True:
 

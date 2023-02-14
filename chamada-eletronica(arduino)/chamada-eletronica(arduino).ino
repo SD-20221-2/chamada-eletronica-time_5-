@@ -49,7 +49,7 @@ void loop()
   Serial.println(conteudo.substring(1));
 
   // Se for o cartão do professor, o LED amarelo irá acender
-  if(conteudo.substring(1) == "B4 D9 07 85"){
+  if(conteudo.substring(1) == "46 06 99 AC"){
     state = !state;
     stateRED = !stateRED;
     digitalWrite(3, state); 
