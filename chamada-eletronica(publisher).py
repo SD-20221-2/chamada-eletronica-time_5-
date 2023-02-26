@@ -1,7 +1,7 @@
 import zmq, time
 import serial
 # Inicia a conexão do arduino, pela porta COM8, rate 9600
-arduino = serial.Serial('COM8',9600)
+arduino = serial.Serial('COM3',9600)
 
 context = zmq.Context()
 
@@ -28,5 +28,5 @@ while True:
     
     # Faz o publish para todos os subscritos em TAG INFO com as informações da tag que acabou de receber pelo arduino (loop)
     if flag and tagID != tagProfessor :
-        s.send_string("TAG INFO " + tagID)
+        s.send_string("TAG " + tagID)
         print('dados publicados')
