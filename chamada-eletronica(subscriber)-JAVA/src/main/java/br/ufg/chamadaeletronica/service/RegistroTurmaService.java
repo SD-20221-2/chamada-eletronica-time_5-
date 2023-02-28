@@ -2,6 +2,7 @@ package br.ufg.chamadaeletronica.service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,11 @@ public class RegistroTurmaService {
 
 	@Autowired
 	RegistroTurmaRepository repo;
+	
+
+	public List<RegistroTurma> findAll() {
+		return repo.findAll();
+	}
 
 	public void registrarPresenca(Discente discente) {
 		RegistroTurma registro = new RegistroTurma();
